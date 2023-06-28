@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{ 
+            background-image: url(https://toohotel.com/wp-content/uploads/2022/09/TOO_restaurant_Panoramique_vue_Paris_nuit_v2-scaled.jpg);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            
+    }
+    h1{
+        color: rgb(255, 255, 255);
+    }
+        .box{
+            display: none;
+            justify-content: center;
+            text-align: center;
+            color: rgb(255, 255, 255);
+        }
+        .box1{
+            margin: 0;
+            padding: 2%;
+            text-align: center;
+
+        }
+    </style>
+</head>
+<body>
+ <div class="box1">
+    <input type="button" value="add" onclick="add()" >
+    <input type="button" value="update" onclick="update()" >
+    <input type="button" value="showall" onclick="showall()" >
+    <input type="button" value="show By Name" onclick="showone()" >
+    <input type="button" value="delete by name" onclick="delname()" >
+    <input type="button" value="delete by id" onclick="delid()" >
+</div>
+    <div>
+    <div id="add"  class="box">
+        <h1>Add Restaurent</h1>
+        <form method="POST" action="http://127.0.0.1:3000/add" target="_blank">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="adresse">Adresse:</label>
+            <input size="20" type="text" id="adresse" name="adresse" required>
+            <br>
+            <label for="kategorie">Kategorie:</label>
+            <input size="20" type="text" id="kategorie" name="kategorie" required>
+            <br>
+            <button type="submit">Submit</button>
+            
+        </form>
+    </div>
+    
+    
+    <div id="update" class="box">
+        <h1>Update Restaurent</h1>
+        <form method="post" action="http://127.0.0.1:3000/Updatebyname" target="_blank">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="adresse">Adresse:</label>
+            <input size="20" type="text" id="adresse" name="adresse" required>
+            <br>
+            <label for="kategorie">Kategorie:</label>
+            <input size="20" type="text" id="kategorie" name="kategorie" required>
+            <br>
+            <button type="submit">Update</button>
+            
+        </form>
+    </div>
+    <div id="showall" class="box">
+        <h1>Show all Restaurent</h1>
+        <form method="get" action="http://127.0.0.1:3000/getall" target="_blank">
+            
+            <button type="submit">Show all</button>
+            
+        </form>
+    </div>
+    <div id="showone" class="box">
+        <h1>Show Restaurent By Name</h1>
+        <form method="post" action="http://127.0.0.1:3000/getbyname" target="_blank">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <button type="submit">show</button>
+        </form>
+    </div>
+    <div id="delname" class="box">
+        
+        <h1>Delete Restaurent By Name</h1>
+        <form method="post" action="http://127.0.0.1:3000/deletebyname" target="_blank">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <button type="submit">delete</button>
+        </form>
+    </div>
+    <div  id="delid" class="box">
+        <h1>Delete Restaurent By id</h1>
+        <form method="POST" action="http://127.0.0.1:3000/deletebyid" target="_blank">
+            <label for="id">Id:</label>
+            <input type="text" id="id" name="id" required>
+            <br>
+            <button type="submit">DELETE</button>
+        </form>
+    </div>
+    </div>
+
+    <script>
+
+        function add () {
+            document.getElementById("add").style.display="block";
+            document.getElementById("update").style.display="none";
+            document.getElementById("showall").style.display="none";
+            document.getElementById("showone").style.display="none";
+            document.getElementById("delname").style.display="none";
+            document.getElementById("delid").style.display="none";
+        }
+        function update () {
+            document.getElementById("add").style.display="none";
+            document.getElementById("update").style.display="block";
+            document.getElementById("showall").style.display="none";
+            document.getElementById("showone").style.display="none";
+            document.getElementById("delname").style.display="none";
+            document.getElementById("delid").style.display="none";
+        }
+        function showall () {
+            document.getElementById("update").style.display="none";
+            document.getElementById("add").style.display="none";
+            document.getElementById("showall").style.display="block";
+            document.getElementById("showone").style.display="none";
+            document.getElementById("delname").style.display="none";
+            document.getElementById("delid").style.display="none";
+        }
+        function showone () {
+            document.getElementById("update").style.display="none";
+            document.getElementById("showall").style.display="none";
+            document.getElementById("add").style.display="none";
+            document.getElementById("showone").style.display="block";
+            document.getElementById("delname").style.display="none";
+            document.getElementById("delid").style.display="none";
+        }
+        function delname () {
+            document.getElementById("update").style.display="none";
+            document.getElementById("showall").style.display="none";
+            document.getElementById("showone").style.display="none";
+            document.getElementById("delname").style.display="block";
+            document.getElementById("add").style.display="none";
+            document.getElementById("delid").style.display="none";
+        }
+        function delid () {
+            document.getElementById("update").style.display="none";
+            document.getElementById("showall").style.display="none";
+            document.getElementById("showone").style.display="none";
+            document.getElementById("delname").style.display="none";
+            document.getElementById("add").style.display="none";
+            document.getElementById("delid").style.display="block";
+        }
+    </script>
+</body>
+</html>
