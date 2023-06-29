@@ -1,14 +1,14 @@
 const http = require('http');
 
-const host = '127.0.0.1';
+const host = 'localhost';
 const port = '3000';
 const method = ['GET', 'POST', 'PUT', 'DELETE']
 const bodies = [
-    { name: "Bobs Burgers", adresse: "Zum Burgerladen 3, 12345 Burgerhausen", kategorie: "burgerrestaurant" }, 
-    { name: "AmoreMia", adresse: "hamelnstr. 9", kategorie: "pizza" }, 
-    { name: "SushiFu", adresse: "Streetstr. 8", kategorie: "sushi" }, 
-    { name: "AmoreMia", adresse: "Burgerstr. 1", kategorie: "pizza"}, 
-    { name: "SushiFu", adresse: "Streetstr. 8", kategorie: "thai"}
+    { Name: "Bobs Burgers", Adresse: "Zum Burgerladen 3, 12345 Burgerhausen", Kategorie: "burgerrestaurant" }, 
+    { Name: "AmoreMia", Adresse: "hamelnstr. 9", Kategorie: "pizza" }, 
+    { Name: "SushiFu", Adresse: "Streetstr. 8", Kategorie: "sushi" }, 
+    { Name: "AmoreMia", Adresse: "Burgerstr. 1", Kategorie: "pizza"}, 
+    { Name: "SushiFu", Adresse: "Streetstr. 8", Kategorie: "thai"}
 ];
 //check if Bob's Burgers exists
 const request1 = {

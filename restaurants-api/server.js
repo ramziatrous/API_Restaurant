@@ -21,7 +21,7 @@ app.get('/restaurants', (_,res)=>{
         });
 
 app.get('/restaurant/:name', (req, res) => {
-    pool.query(`SELECT * FROM Restaurant WHERE Restaurant.Name = "${req.params.name}"`, (error, results) =>{
+    pool.query(`SELECT * FROM Restaurant WHERE Restaurant.Name = ?`,[req.params.name], (error, results) =>{
         if(error){
             return console.log(error);
         }
@@ -31,12 +31,33 @@ app.get('/restaurant/:name', (req, res) => {
     })
 
 app.post('/restaurant', (req, res) => {
-    pool.query(`INSERT INTO Restaurant(Name, Adresse,Kategorie) VALUES("${req.body.Name}", "${req.body.Adresse}","${req.body.Kategorie}")`,(error,result)=>{
-        if(error){
-            return console.log(error);
+    pool.query(`SELECT * FROM Restaurant WHERE Name = ?`,[req.body.name], (error, results) =>{
+    if(error){
+        return console.log(error);
+    }
+        if (results === []){
+          pool.query(`INSERT INTO Restaurant(Name, Adresse,Kategorie) VALUES(?, ?,?)`,[req.body.Name,req.body.Adresse,req.body.Kategorie],(error,result)=>{
+            if(error){
+                return console.log(error);
+            }
+            res.send("Restaurant Added : \n Name : "+req.body.Name+"\n Adresse : "+req.body.Adresse+ "\nKategorie:"+req.body.Kategorie)
+        })  
         }
-            res.send(`Name : ${req.body.Name} Adresse : ${req.body.Adresse} Kategorie:${req.body.Kategorie}`)
+        app.put('/restaurant/:name', (req, res) => {
+
+            pool.query(`UPDATE Restaurant SET Name = "${req.body.Name}", Adresse = "${req.body.Adresse}", Kategorie = "${req.body.Kategorie}" WHERE Name = "${req.params.name}"`, (error, result) => {
+                if(error){
+                    return console.log(error);
+                }
+                    res.send("Restaurant Updated : \n Name : "+req.body.Name+"\n Adresse : "+req.body.Adresse+ "\nKategorie:"+req.body.Kategorie)
+                })
         })
+
+    })
+
+
+
+    
     })
 
 app.put('/restaurant/:name', (req, res) => {
@@ -45,7 +66,7 @@ app.put('/restaurant/:name', (req, res) => {
         if(error){
             return console.log(error);
         }
-            res.send(`Name : ${req.body.Name} Adresse : ${req.body.Adresse} Kategorie:${req.body.Kategorie}`)
+            res.send("Restaurant Updated : \n Name : "+req.body.Name+"\n Adresse : "+req.body.Adresse+ "\nKategorie:"+req.body.Kategorie)
         })
 })
 
