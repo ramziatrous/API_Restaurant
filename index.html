@@ -10,6 +10,15 @@
             background-size: 100%;
             background-repeat: no-repeat;
         }
+        .tableShowAll{
+            margin: 1%;
+            justify-content: center;
+            text-align: center;
+            font-size: 21px;
+            border-radius: 10px;
+            border-color: blue;
+            color: rgb(0, 0, 0);
+        }
         h1{
             color: rgb(255, 255, 255);
         }
@@ -34,22 +43,22 @@
     <input type="button" value="showall" onclick="showall()" >
     <input type="button" value="show By Name" onclick="showone()" >
     <input type="button" value="delete by name" onclick="delname()" >
-    <input type="button" value="delete by id" onclick="delid()" >
+    <!-- <input type="button" value="delete by id" onclick="delid()" > -->
 </div>
 <div>
     <div id="add"  class="box">
         <h1>Add Restaurent</h1>
-        <form method="POST" action="http://127.0.0.1:3000/add" target="_blank">
+        <form >
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="addname" name="name" required>
             <br>
             <label for="adresse">Adresse:</label>
-            <input size="20" type="text" id="adresse" name="adresse" required>
+            <input size="20" type="text" id="addadresse" name="adresse" required>
             <br>
             <label for="kategorie">Kategorie:</label>
-            <input size="20" type="text" id="kategorie" name="kategorie" required>
+            <input size="20" type="text" id="addkategorie" name="kategorie" required>
             <br>
-            <button type="submit">Submit</button>
+            <button type="button" onclick="AddRes()">Submit</button>
 
         </form>
     </div>
@@ -57,17 +66,17 @@
 
     <div id="update" class="box">
         <h1>Update Restaurent</h1>
-        <form method="post" action="http://127.0.0.1:3000/Updatebyname" target="_blank">
+        <form >
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="upname" name="name" required>
             <br>
             <label for="adresse">Adresse:</label>
-            <input size="20" type="text" id="adresse" name="adresse" required>
+            <input size="20" type="text" id="upadresse" name="adresse" required>
             <br>
             <label for="kategorie">Kategorie:</label>
-            <input size="20" type="text" id="kategorie" name="kategorie" required>
+            <input size="20" type="text" id="upkategorie" name="kategorie" required>
             <br>
-            <button type="submit">Update</button>
+            <button type="button" onclick="UpdateRes()">Update</button>
 
         </form>
     </div>
@@ -78,8 +87,9 @@
         </form>
     </div>
     <div>
-        <table id="tableShowAll" border="1px">
+        <table class="tableShowAll" id="tableShowAll" border="1px">
             <tr>
+                
                 <th>Name</th>
                 <th>Address</th>
                 <th>Kategorie</th>
@@ -88,21 +98,21 @@
     </div>
     <div id="showone" class="box">
         <h1>Show Restaurent By Name</h1>
-        <form method="post" action="http://127.0.0.1:3000/getbyname" target="_blank">
+        <form  >
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="one" name="name" required>
             <br>
-            <button type="submit">show</button>
+            <button type="button" onclick="ShowOne()">show</button>
         </form>
     </div>
     <div id="delname" class="box">
 
         <h1>Delete Restaurent By Name</h1>
-        <form method="post" action="http://127.0.0.1:3000/deletebyname" target="_blank">
+        <form   target="_blank">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="del"  required>
             <br>
-            <button type="submit">delete</button>
+            <button type="button" onclick="deleteres()">delete</button>
         </form>
     </div>
     <div  id="delid" class="box">
@@ -116,77 +126,6 @@
     </div>
 </div>
 
-<script>
-
-    function add () {
-        document.getElementById("add").style.display="block";
-        document.getElementById("update").style.display="none";
-        document.getElementById("showall").style.display="none";
-        document.getElementById("showone").style.display="none";
-        document.getElementById("delname").style.display="none";
-        document.getElementById("delid").style.display="none";
-    }
-    function update () {
-        document.getElementById("add").style.display="none";
-        document.getElementById("update").style.display="block";
-        document.getElementById("showall").style.display="none";
-        document.getElementById("showone").style.display="none";
-        document.getElementById("delname").style.display="none";
-        document.getElementById("delid").style.display="none";
-    }
-    function showall () {
-        document.getElementById("update").style.display="none";
-        document.getElementById("add").style.display="none";
-        document.getElementById("showall").style.display="block";
-        document.getElementById("showone").style.display="none";
-        document.getElementById("delname").style.display="none";
-        document.getElementById("delid").style.display="none";
-    }
-    function executeShowAll () {
-        fetch('http://127.0.0.1:3000/getall', {
-            headers: {
-                'Access-Control-Allow-Origin': 'http://127.0.0.1:8080/',
-                'Accept': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(result => {
-                console.log(result);
-                let innerHtml = '            <tr>' +
-                    '                <th>Name</th>' +
-                    '                <th>Address</th>' +
-                    '                <th>Kategorie</th>' +
-                    '            </tr>';
-                for(let i = 0; i < result.length; i++) {
-                    innerHtml+= '<tr><td>' + result[i]['name'] + '</td> <td>' + result[i]['adresse'] + '</td><td>' + result[i]['kategorie'] +'</td></tr>';
-                }
-                document.getElementById("tableShowAll").innerHTML = innerHtml;
-            })
-    }
-    function showone () {
-        document.getElementById("update").style.display="none";
-        document.getElementById("showall").style.display="none";
-        document.getElementById("add").style.display="none";
-        document.getElementById("showone").style.display="block";
-        document.getElementById("delname").style.display="none";
-        document.getElementById("delid").style.display="none";
-    }
-    function delname () {
-        document.getElementById("update").style.display="none";
-        document.getElementById("showall").style.display="none";
-        document.getElementById("showone").style.display="none";
-        document.getElementById("delname").style.display="block";
-        document.getElementById("add").style.display="none";
-        document.getElementById("delid").style.display="none";
-    }
-    function delid () {
-        document.getElementById("update").style.display="none";
-        document.getElementById("showall").style.display="none";
-        document.getElementById("showone").style.display="none";
-        document.getElementById("delname").style.display="none";
-        document.getElementById("add").style.display="none";
-        document.getElementById("delid").style.display="block";
-    }
-</script>
+<script src="script.js"></script>
 </body>
 </html>

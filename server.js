@@ -31,12 +31,7 @@ app.post( '/add' , (req , res)=>{
  });
 
  app.get('/getall', (req,res)=>{
-     // console.log('test');
-     // res.json([{
-     //     name: 'nom',
-     //     adresse: 'address',
-     //     kategorie: 'kategorie'
-     // }]);
+    
     restaurant.find()
     .then(
         (restaurants)=>{
@@ -55,10 +50,11 @@ app.post( '/add' , (req , res)=>{
  
  app.post('/getbyname', (req,res)=>{
     
-    restaurant.findOne({name:req.body.name})
+    restaurant.findOne({ name:req.body.name})
     .then(
         (restauranta)=>{
-            res.send(` Name : ${restauranta.name}\n Adresse : ${restauranta.adresse} \n Kategorie : ${restauranta.kategorie}`);
+            console.log(req.body.name)
+            res.send(restauranta);
         })
         .catch(
             (err)=>{
@@ -79,7 +75,7 @@ app.post( '/add' , (req , res)=>{
     restaurant.findOneAndUpdate({name:req.body.name}, newdata)
     .then(
         (updated)=>{
-            res.send(`restaurant updated \n Name : ${req.body.name}\n Adresse : ${req.body.adresse} \n Kategorie : ${req.body.kategorie}`);
+            res.send(updated)
         })
         .catch(
             (err)=>{
@@ -95,6 +91,7 @@ app.post( '/add' , (req , res)=>{
     restaurant.findOneAndDelete({ name:req.body.name})
     .then(
         (deletedrestaurant)=>{
+            
             res.send("restaurant deleted");
         })
         .catch(
