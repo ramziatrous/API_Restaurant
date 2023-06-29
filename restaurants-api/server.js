@@ -42,16 +42,15 @@ app.post('/restaurant', (req, res) => {
             }
             res.send("Restaurant Added : \n Name : "+req.body.Name+"\n Adresse : "+req.body.Adresse+ "\nKategorie:"+req.body.Kategorie)
         })  
-        }
-        app.put('/restaurant/:name', (req, res) => {
+        } else {
 
-            pool.query(`UPDATE Restaurant SET Name = "${req.body.Name}", Adresse = "${req.body.Adresse}", Kategorie = "${req.body.Kategorie}" WHERE Name = "${req.params.name}"`, (error, result) => {
+            pool.query(`UPDATE Restaurant SET Name = "${req.body.Name}", Adresse = "${req.body.Adresse}", Kategorie = "${req.body.Kategorie}" WHERE Name = "${req.body.name}"`, (error, result) => {
                 if(error){
                     return console.log(error);
                 }
                     res.send("Restaurant Updated : \n Name : "+req.body.Name+"\n Adresse : "+req.body.Adresse+ "\nKategorie:"+req.body.Kategorie)
                 })
-        })
+            }
 
     })
 
