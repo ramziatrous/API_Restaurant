@@ -1,17 +1,17 @@
 const express = require('express');
 require('./config/connect');
 const restaurant =require('./models/restau');
-
+var cors = require('cors');
 const app = express();
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(cors());
 
 
 app.post( '/add' , (req , res)=>{
 
     let  data = {
-     
      "name": req.body.name ,
      "adresse": req.body.adresse ,
      "kategorie": req.body.kategorie ,
@@ -31,19 +31,24 @@ app.post( '/add' , (req , res)=>{
  });
 
  app.get('/getall', (req,res)=>{
+     // console.log('test');
+     // res.json([{
+     //     name: 'nom',
+     //     adresse: 'address',
+     //     kategorie: 'kategorie'
+     // }]);
     restaurant.find()
     .then(
         (restaurants)=>{
-            
+
             res.send(restaurants);
-            
+
         })
         .catch(
             (err)=>{
                 res.send(err)
             }
         )
-    
  });
 
 
